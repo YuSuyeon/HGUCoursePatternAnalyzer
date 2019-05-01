@@ -5,24 +5,24 @@ import edu.handong.analysis.datamodel.Student;
 
 public class HGUCoursePatternAnalyzer {
 	
-	String[] lines = {	"1999-1, JC Nam, Java Programming",
-						"1999-2, JC Nam, Programming Language Theory",
-						"1999-1, JC Nam, Data Structures",
-						"2001-1, JC Nam, Database Systems",
-						"2018-1, SB Lim, Java Programming",
-						"2018-2, SB Lim, Programming Language Theory",
-						"2019-1, SB Lim, Data Structures",
-						"2019-1, SB Lim, Algorithm Analysis",
-						"2018-1, SJ Kim, Java Programming",
-						"2018-2, SJ Kim, Programming Language Theory",
-						"2019-1, SJ Kim, Logic Design",
-						"2019-1, SJ Kim, Algorithm Analysis",
-						};
+	private String[] lines = {	"1999-1, JC Nam, Java Programming",
+								"1999-2, JC Nam, Programming Language Theory",
+								"1999-1, JC Nam, Data Structures",
+								"2001-1, JC Nam, Database Systems",
+								"2018-1, SB Lim, Java Programming",
+								"2018-2, SB Lim, Programming Language Theory",
+								"2019-1, SB Lim, Data Structures",
+								"2019-1, SB Lim, Algorithm Analysis",
+								"2018-1, SJ Kim, Java Programming",
+								"2018-2, SJ Kim, Programming Language Theory",
+								"2019-1, SJ Kim, Logic Design",
+								"2019-1, SJ Kim, Algorithm Analysis",
+							};
 
-	int numOfStudents;
-	int numOfCourses;
-	Student[] students;
-	Course[] courses;
+	private int numOfStudents;
+	private int numOfCourses;
+	private Student[] students;
+	private Course[] courses;
 	
 	/**
 	 * This method runs our analysis logic to get the list of student and course names from lines.
@@ -34,6 +34,11 @@ public class HGUCoursePatternAnalyzer {
 		numOfCourses = Integer.parseInt(args[1]);
 	
 		students = initiateStudentArrayFromLines(lines);
+		if(students != null) {
+			System.out.println(students);
+		}else {
+			System.out.println("NEP Error");
+		}
 		
 		System.out.println("Number of All Students: " + numOfStudents);
 		for(Student student: students) {
@@ -41,11 +46,11 @@ public class HGUCoursePatternAnalyzer {
 		}
 		
 		courses = initiateCourseArrayFromLines(lines);
+
 		System.out.println("Number of All Courses: " + numOfCourses);
 		for(Course course: courses) {
 			System.out.println(course.getCourseName());
 		}
-		
 	}
 
 	/**
@@ -55,22 +60,30 @@ public class HGUCoursePatternAnalyzer {
 	 */
 	private Student[] initiateStudentArrayFromLines(String[] lines) {
 		
-		// TODO: implement this method
-		
-		
-		return null;
+	    for(int i=0; i<lines.length; i++){
+	    	String[] students = new String[lines.length];
+	    	students[i] = lines[i].split(",")[1].trim();
+	       
+	        if(!studentExist(students, students[i])){
+	        	students[i] = students[i];
+	        } else {
+	        	System.out.println("student name already exists in the array!");
+	          }
+	    }
+		return students;
 	}
 
 	/**
-	 * This method check if there is the same name of the second arugement in the array, students
+	 * This method check if there is the same name of the second argument in the array, students
 	 * @param students
 	 * @param student
 	 * @return boolean
 	 */
 	private boolean studentExist(Student[] students, Student student) {
 		
-		// TODO: implement this method
-
+		for(int i=0; i < students.length; i++) {
+			if(student.getName().equals(students[i].getName())) return true;
+		}
 		return false;
 	}
 	
@@ -81,9 +94,17 @@ public class HGUCoursePatternAnalyzer {
 	 */
 	private Course[] initiateCourseArrayFromLines(String[] lines) {
 		
-		// TODO: implement this method
-		
-		return null;
+		for(int i=0; i<lines.length; i++){
+	    	String[] courses = new String[lines.length];
+	    	courses[i] = lines[i].split(",")[1].trim();
+	      
+	        if(!courseExist(courses, courses[i])){
+	        	courses[i] = courses[i];
+	        } else {
+	        	System.out.println("student name already exists in the array!");
+	          }
+	    }
+		return courses;
 	}
 
 	/**
@@ -94,8 +115,9 @@ public class HGUCoursePatternAnalyzer {
 	 */
 	private boolean courseExist(Course[] courses, Course course) {
 		
-		// TODO: implement this method
-
+		for(int i=0; i < courses.length; i++) {
+			if(course.getCourseName().equals(courses[i].getCourseName())) return true;
+		}
 		return false;
 	}
 
