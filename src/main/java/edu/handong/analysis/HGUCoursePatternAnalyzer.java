@@ -34,11 +34,6 @@ public class HGUCoursePatternAnalyzer {
 		numOfCourses = Integer.parseInt(args[1]);
 	
 		students = initiateStudentArrayFromLines(lines);
-		if(students != null) {
-			System.out.println(students);
-		}else {
-			System.out.println("NEP Error");
-		}
 		
 		System.out.println("Number of All Students: " + numOfStudents);
 		for(Student student: students) {
@@ -60,17 +55,23 @@ public class HGUCoursePatternAnalyzer {
 	 */
 	private Student[] initiateStudentArrayFromLines(String[] lines) {
 		
+		students = new Student[numOfStudents];
+		
+		int j =0;
+		students[j++] = new Student(lines[0].split(",")[1].trim()); 
+		
 	    for(int i=0; i<lines.length; i++){
-	    	String[] students = new String[lines.length];
-	    	students[i] = lines[i].split(",")[1].trim();
-	       
-	        if(!studentExist(students, students[i])){
-	        	students[i] = students[i];
-	        } else {
-	        	System.out.println("student name already exists in the array!");
-	          }
+	    	
+	    	String studentNames = lines[i].split(",")[1].trim();
+	    	Student student = new Student(studentNames);
+	    	
+	    	if(!studentExist(students, student)) {
+	    		students[j++] = new Student(student.getName());
+	    	}
 	    }
+	       
 		return students;
+
 	}
 
 	/**
@@ -81,10 +82,16 @@ public class HGUCoursePatternAnalyzer {
 	 */
 	private boolean studentExist(Student[] students, Student student) {
 		
-		for(int i=0; i < students.length; i++) {
-			if(student.getName().equals(students[i].getName())) return true;
+		for (int i = 0; i < lines.length; i++){
+			if(students[i] == null) {
+				break;
+			}
+			if(student.getName().equals(students[i].getName())) {
+					return true;
+			}	
 		}
-		return false;
+		
+		return false; 
 	}
 	
 	/**
@@ -94,16 +101,21 @@ public class HGUCoursePatternAnalyzer {
 	 */
 	private Course[] initiateCourseArrayFromLines(String[] lines) {
 		
-		for(int i=0; i<lines.length; i++){
-	    	String[] courses = new String[lines.length];
-	    	courses[i] = lines[i].split(",")[1].trim();
-	      
-	        if(!courseExist(courses, courses[i])){
-	        	courses[i] = courses[i];
-	        } else {
-	        	System.out.println("student name already exists in the array!");
-	          }
+		courses = new Course[numOfCourses];
+		
+		int j =0;
+		courses[j++] = new Course(lines[0].split(",")[2].trim()); 
+		
+	    for(int i=0; i<lines.length; i++){
+	    	
+	    	String courseNames = lines[i].split(",")[2].trim();
+	    	Course course = new Course(courseNames);
+	    	
+	    	if(!courseExist(courses, course)) {
+	    		courses[j++] = new Course(course.getCourseName());
+	    	}
 	    }
+	       
 		return courses;
 	}
 
@@ -115,10 +127,17 @@ public class HGUCoursePatternAnalyzer {
 	 */
 	private boolean courseExist(Course[] courses, Course course) {
 		
-		for(int i=0; i < courses.length; i++) {
-			if(course.getCourseName().equals(courses[i].getCourseName())) return true;
+		for (int i = 0; i < lines.length; i++){
+			if(courses[i] == null) {
+				break;
+			}
+			
+			if(course.getCourseName().equals(courses[i].getCourseName())) {
+				return true;
+			} 
 		}
+		
 		return false;
-	}
+	}	
 
 }
