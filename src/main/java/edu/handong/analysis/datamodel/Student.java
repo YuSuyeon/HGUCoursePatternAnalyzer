@@ -4,12 +4,12 @@ public class Student {
 		
 	private String name;
 		
-	public Student(String studentNames) {
-		this.name = studentNames;
+	public Student(String name) {
+		this.name = name;
 	}
 		
 	public String getName() {
-		return this.name;
+		return name;
 	}
 	
 }
